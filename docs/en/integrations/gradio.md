@@ -16,7 +16,9 @@ This Gradio interface provides an easy and interactive way to perform object det
 * **Real-Time Adjustments:** Parameters such as confidence and IoU thresholds can be adjusted on the fly, allowing for immediate feedback and optimization of detection results.
 * **Broad Accessibility:** The Gradio web interface can be accessed by anyone, making it an excellent tool for demonstrations, educational purposes, and quick experiments.
 
-<img width="800" alt="Gradio example screenshot" src="https://github.com/WangQvQ/ultralytics/assets/58406737/5d906f10-fd62-4bcc-8856-ef3233102c1d">
+<p align="center">
+   <img width="800" alt="Gradio example screenshot" src="https://github.com/RizwanMunawar/ultralytics/assets/26833433/52ee3cd2-ac59-4c27-9084-0fd05c6c33be">
+</p>
 
 ## How to Install the Gradio
 
@@ -42,15 +44,15 @@ pip install gradio
 This section provides the Python code used to create the Gradio interface with the Ultralytics YOLOv8 model. Supports classification tasks, detection tasks, segmentation tasks, and key point tasks.
 
 ```python
-import PIL.Image as Image
 import gradio as gr
-
+import PIL.Image as Image
 from ultralytics import ASSETS, YOLO
 
 model = YOLO("yolov8n.pt")
 
 
 def predict_image(img, conf_threshold, iou_threshold):
+    """Predicts and plots labeled objects in an image using YOLOv8 model with adjustable confidence and IOU thresholds."""
     results = model.predict(
         source=img,
         conf=conf_threshold,
@@ -72,7 +74,7 @@ iface = gr.Interface(
     inputs=[
         gr.Image(type="pil", label="Upload Image"),
         gr.Slider(minimum=0, maximum=1, value=0.25, label="Confidence threshold"),
-        gr.Slider(minimum=0, maximum=1, value=0.45, label="IoU threshold")
+        gr.Slider(minimum=0, maximum=1, value=0.45, label="IoU threshold"),
     ],
     outputs=gr.Image(type="pil", label="Result"),
     title="Ultralytics Gradio",
@@ -80,10 +82,10 @@ iface = gr.Interface(
     examples=[
         [ASSETS / "bus.jpg", 0.25, 0.45],
         [ASSETS / "zidane.jpg", 0.25, 0.45],
-    ]
+    ],
 )
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     iface.launch()
 ```
 

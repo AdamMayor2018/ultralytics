@@ -13,7 +13,7 @@ Example:
     m = Conv(128, 128)
     f = f'{m._get_name()}.onnx'
     torch.onnx.export(m, x, f)
-    os.system(f'onnxsim {f} {f} && open {f}')
+    os.system(f'onnxslim {f} {f} && open {f}')  # pip install onnxslim
     ```
 """
 
@@ -24,18 +24,28 @@ from .block import (
     C3TR,
     DFL,
     SPP,
+    SPPELAN,
     SPPF,
+    ADown,
+    BNContrastiveHead,
     Bottleneck,
     BottleneckCSP,
     C2f,
+    C2fAttn,
     C3Ghost,
     C3x,
+    CBFuse,
+    CBLinear,
+    ContrastiveHead,
     GhostBottleneck,
     HGBlock,
     HGStem,
+    ImagePoolingAttn,
     Proto,
     RepC3,
+    RepNCSPELAN4,
     ResNetLayer,
+    Silence,
 )
 from .conv import (
     CBAM,
@@ -52,7 +62,7 @@ from .conv import (
     RepConv,
     SpatialAttention,
 )
-from .head import OBB, Classify, Detect, Pose, RTDETRDecoder, Segment
+from .head import OBB, Classify, Detect, Pose, RTDETRDecoder, Segment, WorldDetect
 from .transformer import (
     AIFI,
     MLP,
@@ -93,6 +103,7 @@ __all__ = (
     "C2",
     "C3",
     "C2f",
+    "C2fAttn",
     "C3x",
     "C3TR",
     "C3Ghost",
@@ -114,4 +125,14 @@ __all__ = (
     "MLP",
     "ResNetLayer",
     "OBB",
+    "WorldDetect",
+    "ImagePoolingAttn",
+    "ContrastiveHead",
+    "BNContrastiveHead",
+    "RepNCSPELAN4",
+    "ADown",
+    "SPPELAN",
+    "CBFuse",
+    "CBLinear",
+    "Silence",
 )
