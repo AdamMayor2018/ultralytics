@@ -75,6 +75,7 @@ from .transformer import (
     TransformerEncoderLayer,
     TransformerLayer,
 )
+from .attention import SEBlock, CBAM, ECA, AttentionConcat
 
 __all__ = (
     "Conv",
