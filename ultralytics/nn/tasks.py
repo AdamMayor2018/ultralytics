@@ -51,6 +51,10 @@ from ultralytics.nn.modules import (
     Segment,
     Silence,
     WorldDetect,
+    AttentionConcat,
+    CBAM,
+    ECA,
+    SEBlock
 )
 from ultralytics.utils import DEFAULT_CFG_DICT, DEFAULT_CFG_KEYS, LOGGER, colorstr, emojis, yaml_load
 from ultralytics.utils.checks import check_requirements, check_suffix, check_yaml
@@ -857,8 +861,11 @@ def parse_model(d, ch, verbose=True):  # model_dict, input_channels(3)
         m = getattr(torch.nn, m[3:]) if "nn." in m else globals()[m]  # get module
         for j, a in enumerate(args):
             if isinstance(a, str):
-                with contextlib.suppress(ValueError):
-                    args[j] = locals()[a] if a in locals() else ast.literal_eval(a)
+                with contextlib.suppress(NameError):
+                    args[j] = eval(a) if isinstance(a, str) else a  # eval strings
+                #with contextlib.suppress(ValueError):
+                    #args[j] = eval(a) if isinstance(a, str) else a  # eval strings
+                #args[j] = locals()[a] if a in locals() else ast.literal_eval(a)
 
         n = n_ = max(round(n * depth), 1) if n > 1 else n  # depth gain
         if m in {
@@ -912,10 +919,16 @@ def parse_model(d, ch, verbose=True):  # model_dict, input_channels(3)
                 n = 1
         elif m is ResNetLayer:
             c2 = args[1] if args[3] else args[1] * 4
-        elif m is nn.BatchNorm2d:
+        # 新增的注意力机制特点都是输入输出通道数相等，因此只记录一个参数即可
+        elif m in (nn.BatchNorm2d, CBAM, SEBlock, ECA):
             args = [ch[f]]
-        elif m is Concat or m is Concat_DFPN:
+        # concat类别的模块输出通道数等于各模块的输入通道数之和
+        elif m in (Concat, AttentionConcat, Concat_DFPN):
             c2 = sum(ch[x] for x in f)
+        # elif m is nn.BatchNorm2d:
+        #     args = [ch[f]]
+        # elif m is Concat:
+        #     c2 = sum(ch[x] for x in f)
         elif m in {Detect, WorldDetect, Segment, Pose, OBB, ImagePoolingAttn}:
             args.append([ch[x] for x in f])
             if m is Segment:
