@@ -1,0 +1,5 @@
+yolo8_DFPN
+metrics/precision(B) : 0.27825135139142965 
+metrics/recall(B) : 0.12248299960952189 
+metrics/mAP50(B) : 0.156805518190866 
+metrics/mAP50-95(B) : 0.1777887994872003 

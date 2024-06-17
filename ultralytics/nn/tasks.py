@@ -28,6 +28,7 @@ from ultralytics.nn.modules import (
     CBLinear,
     Classify,
     Concat,
+    Concat_DFPN,
     Conv,
     Conv2,
     ConvTranspose,
@@ -42,6 +43,7 @@ from ultralytics.nn.modules import (
     ImagePoolingAttn,
     Pose,
     RepC3,
+    C2f_Deform_conv,
     RepConv,
     RepNCSPELAN4,
     ResNetLayer,
@@ -874,6 +876,7 @@ def parse_model(d, ch, verbose=True):  # model_dict, input_channels(3)
             C1,
             C2,
             C2f,
+            C2f_Deform_conv,
             RepNCSPELAN4,
             ADown,
             SPPELAN,
@@ -896,7 +899,7 @@ def parse_model(d, ch, verbose=True):  # model_dict, input_channels(3)
                 )  # num heads
 
             args = [c1, c2, *args[1:]]
-            if m in {BottleneckCSP, C1, C2, C2f, C2fAttn, C3, C3TR, C3Ghost, C3x, RepC3}:
+            if m in {BottleneckCSP, C1, C2, C2f, C2f_Deform_conv, C2fAttn, C3, C3TR, C3Ghost, C3x, RepC3}:
                 args.insert(2, n)  # number of repeats
                 n = 1
         elif m is AIFI:
@@ -911,7 +914,7 @@ def parse_model(d, ch, verbose=True):  # model_dict, input_channels(3)
             c2 = args[1] if args[3] else args[1] * 4
         elif m is nn.BatchNorm2d:
             args = [ch[f]]
-        elif m is Concat:
+        elif m is Concat or m is Concat_DFPN:
             c2 = sum(ch[x] for x in f)
         elif m in {Detect, WorldDetect, Segment, Pose, OBB, ImagePoolingAttn}:
             args.append([ch[x] for x in f])
