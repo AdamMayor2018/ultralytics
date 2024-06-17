@@ -6,7 +6,7 @@ import pdb
 
 # model_name = ['train_v8s_baseline', 'yolo8_s5_modify_DCN_100', 'yolo8_s45_modify_DCN', 'yolo8_s345_modify_DCN', 'yolo8_s2345_modify_DCN']a
 
-model_name = ['yolo8_DFPN']
+model_name = ['yolo8_DFPN_ep_60_smootihing_0.2']
 mode = 'test'
 
 
