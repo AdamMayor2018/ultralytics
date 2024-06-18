@@ -37,8 +37,14 @@ from ultralytics import YOLO
 # results = model.train(data="etl.yaml", epochs=100, imgsz=640,name='train_v8s_baseline')
 
 
+# # Load a model
+# model = YOLO("yolov8_DFPN.yaml").load("yolov8s.pt")  # build from YAML and transfer weights
+
+# # Train the model
+# results = model.train(data="etl.yaml", epochs=60, imgsz=640, label_smoothing=0.2,name='yolo8_DFPN_ep_60_smootihing_0.2')
+
 # Load a model
-model = YOLO("yolov8_DFPN.yaml").load("yolov8s.pt")  # build from YAML and transfer weights
+model = YOLO("yolov8_merge.yaml").load("yolov8s.pt")  # build from YAML and transfer weights
 
 # Train the model
-results = model.train(data="etl.yaml", epochs=60, imgsz=640, label_smoothing=0.2,name='yolo8_DFPN_ep_60_smootihing_0.2')
+results = model.train(data="etl.yaml", epochs=100, imgsz=640,name='yolo8_merge')
