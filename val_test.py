@@ -10,6 +10,7 @@ model_name = ['yolo8_DFPN_ep_60_smootihing_0.2']
 
 
 # model_name = ['yolo8_s2345_modify_DCN']
+model_name = ['yolo8_merge_size_768']
 
 
 mode = 'test'
