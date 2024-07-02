@@ -3,13 +3,6 @@ import os
 import cv2
 from tqdm import tqdm
 
-txt_path = '/cfs_train_data/wangyuxuan/dataset/dabuguo_dataset/xindabuguo_val.txt'
-# 输入文件夹包含 YOLO 格式标注文件的路径
-yolo_annotation_folder = '/cfs_train_data/wangyuxuan/dataset/dabuguo_dataset/xindabuguo/xindabuguo_label'
-img_base_path = '/cfs_train_data/wangyuxuan/dataset/dabuguo_dataset/xindabuguo/pull_data'
-
-# COCO 格式输出文件
-coco_output_file = '/cfs_train_data/yanzong/xudong/raw_data/detction/dabuguo/val.json'
 
 
 def get_img_path(path):

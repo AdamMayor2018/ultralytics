@@ -76,8 +76,8 @@ val_evaluator = dict(ann_file=data_root + 'coco_format_label/val.json')
 test_evaluator = dict(ann_file=data_root + 'coco_format_label/test.json')
 
 
-test_dataloader = val_dataloader
-test_evaluator = val_evaluator
+# test_dataloader = val_dataloader
+# test_evaluator = val_evaluator
 
 
 

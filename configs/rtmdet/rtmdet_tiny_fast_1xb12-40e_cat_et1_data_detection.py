@@ -8,7 +8,7 @@ metainfo = dict(classes=class_name, palette=[(20, 220, 60)])
 
 num_epochs_stage2 = 5
 
-max_epochs = 40
+max_epochs = 20
 train_batch_size_per_gpu = 12
 train_num_workers = 4
 val_batch_size_per_gpu = 1
@@ -68,10 +68,10 @@ param_scheduler = [
 _base_.custom_hooks[1].switch_epoch = max_epochs - num_epochs_stage2
 
 val_evaluator = dict(ann_file=data_root + 'coco_format_label/val.json')
-# test_evaluator = dict(ann_file=data_root + 'coco_format_label/test.json')
+test_evaluator = dict(ann_file=data_root + 'coco_format_label/test.json')
 
-test_dataloader = val_dataloader
-test_evaluator = val_evaluator
+# test_dataloader = val_dataloader
+# test_evaluator = val_evaluator
 
 
 default_hooks = dict(
