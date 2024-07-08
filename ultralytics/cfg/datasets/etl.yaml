@@ -1,5 +1,5 @@
 train: /data/dataset/private/yolo-exp-etl-data/train/images
 val: /data/dataset/private/yolo-exp-etl-data/val/images
-# test: /data/dataset/private/yolo-exp-etl-data/test/images
+test: /data/dataset/private/yolo-exp-etl-data/test/images
 nc: 6
 names: ['Inkiness', 'Vitium', 'Crease', 'defaced', 'Patch', 'Signature'] 
