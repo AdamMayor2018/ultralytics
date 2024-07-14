@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # @Time    : 2024/7/2 23:08
 # @Author  : 作者名
-# @File    : yolov8-cbam.yaml.py
+# @File    : yolov8s-cbam.yaml.py
 # @Description  :
 nc: 80 # number of classes
 scales: # model compound scaling constants, i.e. 'model=yolov8n.yaml' will call yolov8.yaml with scale 'n'
