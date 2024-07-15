@@ -22,7 +22,6 @@ class AttentionConcat(nn.Module):
         return torch.cat([x[0], self.att(x[1])], self.d)
 
 
-
 class AttentionConcat_DFPN_column_merge(nn.Module):
     # use attention before concat
     def __init__(self, dimension=1, channel=512, att=None):
@@ -31,16 +30,13 @@ class AttentionConcat_DFPN_column_merge(nn.Module):
         self.c = channel
         self.att = att(self.c)
 
-
     def forward(self, x):
         """Forward pass for the YOLOv8 mask Proto module."""
         target_height, target_width = x[0].shape[2], x[0].shape[3]
-        attention_out = torch.cat([x[0], self.att(x[1])], self.d)
-        x = x[2:]
-        x.append(attention_out)
-        x = [nn.functional.interpolate(tensor, size=(target_height, target_width), mode='bilinear', align_corners=False) if idx == 0 else tensor for idx, tensor in enumerate(x)]
+        x[1] = self.att(x[1])
+        x = [nn.functional.interpolate(tensor, size=(target_height, target_width), mode='bilinear',
+                                       align_corners=False) if idx == 2 else tensor for idx, tensor in enumerate(x)]
         return torch.cat(x, self.d)
-
 
 
 class ChannelAttention(nn.Module):
