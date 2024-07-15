@@ -21,6 +21,8 @@ __all__ = (
     "CBAM",
     "Concat",
     'Concat_DFPN',
+    'AttentionConcat',
+    'AttentionConcat_DFPN_column_merge',
     "RepConv",
 )
 

@@ -53,6 +53,7 @@ from .conv import (
     ChannelAttention,
     Concat,
     Concat_DFPN,
+    
     Conv,
     Conv2,
     ConvTranspose,
@@ -77,7 +78,7 @@ from .transformer import (
     TransformerEncoderLayer,
     TransformerLayer,
 )
-from .attention import SEBlock, CBAM, ECA, AttentionConcat
+from .attention import SEBlock, CBAM, ECA, AttentionConcat, AttentionConcat_DFPN_column_merge
 
 __all__ = (
     "Conv",
@@ -94,6 +95,8 @@ __all__ = (
     "CBAM",
     "Concat",
     'Concat_DFPN',
+    'AttentionConcat',
+    'AttentionConcat_DFPN_column_merge',
     "TransformerLayer",
     "TransformerBlock",
     "MLPBlock",
