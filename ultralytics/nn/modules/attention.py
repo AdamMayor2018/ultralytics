@@ -27,7 +27,7 @@ class ChannelAttention(nn.Module):
     def __init__(self, channels: int) -> None:
         super().__init__()
         self.pool = nn.AdaptiveAvgPool2d(1)
-        self.fc = nn.Conv2d(channels, channels, 1, 1, 0, bias=True)  # O = (I - K + 2*P) / S + 1 所以110的卷积参数组合保持分辨率不变
+        self.fc = nn.Conv2d(channels, channels, 1, 1, 0, bias=False)  # O = (I - K + 2*P) / S + 1 所以110的卷积参数组合保持分辨率不变
         self.act = nn.Sigmoid()
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:

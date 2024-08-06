@@ -63,6 +63,8 @@ from .conv import (
     LightConv,
     RepConv,
     SpatialAttention,
+    Concat_DFPN_with_Attention
+
 )
 from .head import OBB, Classify, Detect, Pose, RTDETRDecoder, Segment, WorldDetect
 from .transformer import (

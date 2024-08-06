@@ -52,6 +52,7 @@ from ultralytics.nn.modules import (
     Silence,
     WorldDetect,
     AttentionConcat,
+    Concat_DFPN_with_Attention,
     CBAM,
     ECA,
     SEBlock
@@ -923,7 +924,7 @@ def parse_model(d, ch, verbose=True):  # model_dict, input_channels(3)
         elif m in (nn.BatchNorm2d, CBAM, SEBlock, ECA):
             args = [ch[f]]
         # concat类别的模块输出通道数等于各模块的输入通道数之和
-        elif m in (Concat, AttentionConcat, Concat_DFPN):
+        elif m in (Concat, AttentionConcat, Concat_DFPN, Concat_DFPN_with_Attention):
             c2 = sum(ch[x] for x in f)
         # elif m is nn.BatchNorm2d:
         #     args = [ch[f]]
