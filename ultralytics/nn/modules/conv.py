@@ -21,8 +21,6 @@ __all__ = (
     "CBAM",
     "Concat",
     'Concat_DFPN',
-    'AttentionConcat',
-    'AttentionConcat_DFPN_column_merge',
     "RepConv",
 )
 
@@ -335,6 +333,7 @@ class Concat(nn.Module):
         """Forward pass for the YOLOv8 mask Proto module."""
         return torch.cat(x, self.d)
 
+
 class Concat_DFPN(nn.Module):
     """Concatenate a list of tensors along dimension."""
 
@@ -348,3 +347,25 @@ class Concat_DFPN(nn.Module):
         target_height, target_width = x[0].shape[2], x[0].shape[3]
         x = [nn.functional.interpolate(tensor, size=(target_height, target_width), mode='bilinear', align_corners=False) if idx >= 2 else tensor for idx, tensor in enumerate(x)]
         return torch.cat(x, self.d)
+
+
+class Concat_DFPN_with_Attention(nn.Module):
+    """Concatenate a list of tensors along dimension."""
+
+    def __init__(self, dimension=1, channel=None, att=None):
+        """Concatenates a list of tensors along a specified dimension."""
+        super().__init__()
+        self.d = dimension
+        self.channel = channel
+        if isinstance(channel, int):
+            self.attention = att(self.channel)
+        else:
+            self.attention = att(sum(self.channel))
+
+    def forward(self, x):
+        """Forward pass for the YOLOv8 mask Proto module."""
+        target_height, target_width = x[0].shape[2], x[0].shape[3]
+        x = [nn.functional.interpolate(tensor, size=(target_height, target_width), mode='bilinear', align_corners=False) if idx >= 2 else tensor for idx, tensor in enumerate(x)]
+        x = torch.cat(x, self.d)
+        x = self.attention(x)
+        return x

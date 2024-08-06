@@ -1,7 +1,7 @@
 from ultralytics import YOLO
 
 # # Load a model
-model = YOLO("yolov8s_merge.yaml").load("yolov8s.pt")  # build from YAML and transfer weights
+model = YOLO("yolov8_merge.yaml").load("yolov8s.pt")  # build from YAML and transfer weights
 
 # # Train the model
-results = model.train(data="/data/cx/datasets/yolo-exp-etl-data/data.yaml", epochs=100, imgsz=640, name='yolo8_merge_dfpn_eca_s45')
+results = model.train(data="etl.yaml", epochs=150, imgsz=640, label_smoothing=0.1,name='yolo8_merge_ep150_label_smoothing_0.1')

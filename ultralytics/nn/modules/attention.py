@@ -22,29 +22,12 @@ class AttentionConcat(nn.Module):
         return torch.cat([x[0], self.att(x[1])], self.d)
 
 
-class AttentionConcat_DFPN_column_merge(nn.Module):
-    # use attention before concat
-    def __init__(self, dimension=1, channel=512, att=None):
-        super().__init__()
-        self.d = dimension
-        self.c = channel
-        self.att = att(self.c)
-
-    def forward(self, x):
-        """Forward pass for the YOLOv8 mask Proto module."""
-        target_height, target_width = x[0].shape[2], x[0].shape[3]
-        x[1] = self.att(x[1])
-        x = [nn.functional.interpolate(tensor, size=(target_height, target_width), mode='bilinear',
-                                       align_corners=False) if idx == 2 else tensor for idx, tensor in enumerate(x)]
-        return torch.cat(x, self.d)
-
-
 class ChannelAttention(nn.Module):
     # Channel-attention module https://github.com/open-mmlab/mmdetection/tree/v3.0.0rc1/configs/rtmdet
     def __init__(self, channels: int) -> None:
         super().__init__()
         self.pool = nn.AdaptiveAvgPool2d(1)
-        self.fc = nn.Conv2d(channels, channels, 1, 1, 0, bias=True)  # O = (I - K + 2*P) / S + 1 所以110的卷积参数组合保持分辨率不变
+        self.fc = nn.Conv2d(channels, channels, 1, 1, 0, bias=False)  # O = (I - K + 2*P) / S + 1 所以110的卷积参数组合保持分辨率不变
         self.act = nn.Sigmoid()
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:

@@ -52,10 +52,10 @@ from ultralytics.nn.modules import (
     Silence,
     WorldDetect,
     AttentionConcat,
-    AttentionConcat_DFPN_column_merge,
-    ECA,
-    SEBlock,
+    Concat_DFPN_with_Attention,
     CBAM,
+    ECA,
+    SEBlock
 )
 from ultralytics.utils import DEFAULT_CFG_DICT, DEFAULT_CFG_KEYS, LOGGER, colorstr, emojis, yaml_load
 from ultralytics.utils.checks import check_requirements, check_suffix, check_yaml
@@ -924,10 +924,8 @@ def parse_model(d, ch, verbose=True):  # model_dict, input_channels(3)
         elif m in (nn.BatchNorm2d, CBAM, SEBlock, ECA):
             args = [ch[f]]
         # concat类别的模块输出通道数等于各模块的输入通道数之和
-        elif m in (Concat, AttentionConcat, Concat_DFPN, AttentionConcat_DFPN_column_merge):
+        elif m in (Concat, AttentionConcat, Concat_DFPN, Concat_DFPN_with_Attention):
             c2 = sum(ch[x] for x in f)
-        # elif m in (AttentionConcat_DFPN_column_merge):
-        #     c2 = sum(ch[x] for x in f)
         # elif m is nn.BatchNorm2d:
         #     args = [ch[f]]
         # elif m is Concat:
